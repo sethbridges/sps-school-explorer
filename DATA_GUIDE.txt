@@ -1,0 +1,1484 @@
+SEATTLE PUBLIC SCHOOLS SCHOOL EXPLORER
+External CSV edition | Prepared October 13, 2026
+
+PUBLISH TO GITHUB PAGES
+1. Extract this ZIP.
+2. Upload index.html, school_profiles.csv and p223_enrollment.csv into the SAME
+   folder of your GitHub repository, replacing the older index.html.
+3. Keep your Pages source set to main / (root), or whichever folder already
+   hosts your site. Commit the files; Pages republishes the site.
+4. The dashboard reads both CSVs on page load. It does not contain a fallback
+   copy of school statistics. Leave both CSVs publicly accessible beside it.
+5. Open the published HTTPS URL. Opening index.html directly from disk will
+   show instructions because browsers restrict fetching adjacent local files.
+   Optional local test: run python3 -m http.server 8000 in this folder, then
+   open http://localhost:8000 in your browser.
+
+WHAT EACH FILE HOLDS
+school_profiles.csv: 106 rows, 66 columns. One row per directory school/program
+plus Bridges Transition. Principals, location, annual student demographics,
+teacher actuals, staffing budgets, historical facility measurements and checks.
+These fields update at different intervals. Their reporting years remain in
+column names. This is not an immutable file or a single-year dataset.
+
+p223_enrollment.csv: 106 rows, 109 columns. One current monthly snapshot, one row
+per school/program. Grade-level and total population, regular program, special
+education, bilingual services, gender totals, state-funded head count/FTE,
+report dates, source URL and monthly coverage notes. Currently September 2026.
+
+index.html: Presentation, field definitions, source register and CSV loader.
+School statistics are fetched from the two files above, not embedded in HTML.
+No external JavaScript libraries or build step are required.
+
+Both CSVs repeat school_key and school_name. Only school_key is used to join.
+The profile school_name is the display name; a name change does not break a join.
+CSV records use UTF-8 with BOM, comma separators and standard quoted fields.
+The joined dashboard exposes 173 distinct columns: the original 167 columns
+(with month-neutral P223 names) plus six monthly metadata fields.
+
+MONTHLY ENROLLMENT UPDATES
+1. Retrieve the next official report from:
+   https://www.seattleschools.org/departments/dots/data-reporting/enrollment-reporting-p223/
+2. Save a copy of the previous p223_enrollment.csv elsewhere as an archive,
+   for example in a history/ folder named p223_2026-09.csv. The current dashboard
+   reads ONLY the fixed filename p223_enrollment.csv; it does not read archives.
+3. Replace its rows with the new monthly figures, keeping headers and school_key
+   unchanged. Each school may appear at most once. Do not append different months
+   into the current snapshot file. New schools need a school_profiles.csv row too.
+4. Update p223_reporting_month (YYYY-MM), p223_school_year,
+   p223_report_created_date, p223_source_url and p223_retrieved_date.
+   Set p223_count_date_grades_1_12 and p223_count_date_preschool_k to the actual
+   dates in the report, even if those dates differ. Refresh school page references,
+   p223_coverage_status and p223_notes as well.
+5. For a school with an available table, use p223_coverage_status = Matched.
+   Update all school totals, grade totals, gender counts, K-12 total and
+   grades_with_students. Preserve the distinction between head counts and FTE.
+6. For a school not separately reported, leave count fields blank and describe
+   the gap in p223_coverage_status. Its row may also be omitted; the school profile
+   still appears and the dashboard explicitly shows missing enrollment.
+7. Publish the replaced CSV. Refresh the page to load the new figures, dates,
+   report label and source URL. No HTML edits are required for the monthly update.
+   Normal GitHub Pages publication/caching delays still apply.
+
+PROFILE / ANNUAL UPDATES
+Edit school_profiles.csv to update principal names, addresses, corrections or
+values within their labeled reporting periods. Update snapshot_date and related
+checks/notes when verifying the changed record. Changes appear on the next load.
+Do not put a newer year's teacher, demographic, budget or facility figures in
+columns labeled with an older year. A rollover of annual reporting years requires
+updating the column schema, labels and source definitions in index.html together.
+
+VALIDATION AND MISSING VALUES
+- Duplicate keys, unknown enrollment keys, mixed months, missing required
+  headers, malformed CSV, non-numeric counts and unreconciled enrollment totals
+  produce a visible error instead of silently displaying incorrect data.
+- Missing values are empty cells, not NA or guessed zeros.
+- Blank grade rows INSIDE an available report are confirmed zeros. An unavailable
+  school report is never zero population.
+- Counts in each grade must sum to the reported school totals. Male + female +
+  non-binary must equal the published student count. K-12 excludes preschool.
+- Bilingual and special education groups overlap; do not sum them as distinct
+  student categories. Funding head count/FTE may differ from total students.
+- Historical teacher ratios and annual demographics are not recalculated with
+  the newer monthly enrollment. Keep their measurement years visible.
+- A school's source PDF page is the physical PDF page including cover/contents.
+- Five other P223 reporting units are not roster school rows. School CSV totals
+  alone do not represent all district reporting units. The original source report
+  and initial validation document retain the district reconciliation.
+
+VERIFICATION OF THIS EDITION
+All original numeric, identity and source values were preserved when splitting.
+106 school keys align across both CSVs. Interaction checks exercised every school,
+all 173 joined fields, missing rows, malformed files and a changed monthly CSV.
+A changed month/source label and changed principal were tested without editing
+HTML. Browser rendering was not re-tested in this environment; the existing
+responsive page design was retained. Validation runs in the browser on each load.
+
+The remainder of this guide documents each CSV header and its original source.
+The same field definitions and links are available in the dashboard.
+
+SOURCE REGISTER
+
+D1: SPS school directory and individual school profiles
+Period: Retrieved October 13, 2026
+URL: https://www.seattleschools.org/schools/
+
+D2: Individual school About/contact pages and dated leadership announcements
+Period: Current website snapshot; appointments for 2026-27
+URL: https://www.seattleschools.org/news/school-leader-appointments/
+
+P1: SPS monthly P223 Enrollment Data by School and Grade
+Period: Monthly; use the date and source URL in p223_enrollment.csv.
+URL: https://www.seattleschools.org/departments/dots/data-reporting/enrollment-reporting-p223/
+
+T1: OSPI Report Card Student Teacher Ratio, 2017-18 to 2024-25
+Period: 2024-25; source dataasof December 16, 2025
+URL: https://data.wa.gov/Education/Report-Card-Student-Teacher-Ratio-School-Years-2017-1/gks4-v7ka
+
+T2: OSPI Report Card Teacher Demographics, 2017-18 to 2024-25
+Period: 2024-25; source dataasof December 11, 2025
+URL: https://data.wa.gov/Education/Report-Card-Teacher-Demographics-School-Years-2017-18/yp28-ks6d
+
+E1: OSPI Report Card Enrollment 2024-25
+Period: 2024-25; source dataasof June 2, 2025
+URL: https://data.wa.gov/education/Report-Card-Enrollment-2024-25-School-Year/2rwv-gs2e
+
+R1: SPS 2025-26 Annual Enrollment Report, Section 10: Student Demographics
+Period: School 2025/26 row, not Boundary 2025/26
+URL: https://www.seattleschools.org/wp-content/uploads/2026/09/Section-10-w_ADA.pdf
+
+B1: SPS 2026-27 Adopted Budget, school-level budget and staffing pages
+Period: Budgeted 2026-27 school-funded staffing; planned FTE, not actual head count
+URL: https://www.seattleschools.org/wp-content/uploads/2026/07/26-27-Budget-Book-Online.pdf
+
+F1: SPS Approved 2025 Facilities Master Plan Update, Appendix A
+Period: 2025 facility inventory; historical, not a 2026 survey
+URL: https://www.seattleschools.org/wp-content/uploads/2025/12/Approved_2025-Facilities-Master-Plan-Update.pdf
+
+G1: City of Seattle GIS Public School locations
+Period: Retrieved October 13, 2026; only points matching directory street address used
+URL: https://services.arcgis.com/ZOyb2t4B0UYuYNYH/ArcGIS/rest/services/Public_School/FeatureServer/0
+
+G2: City of Seattle neighborhood map atlas, sub-neighborhood polygons
+Period: Retrieved October 13, 2026; City Clerk unofficial neighborhood delineation
+URL: https://services.arcgis.com/ZOyb2t4B0UYuYNYH/ArcGIS/rest/services/nma_nhoods_sub/FeatureServer/0
+
+G3: City of Seattle neighborhood map atlas, main neighborhood polygons
+Period: Retrieved October 13, 2026; City Clerk unofficial neighborhood delineation
+URL: https://services.arcgis.com/ZOyb2t4B0UYuYNYH/ArcGIS/rest/services/nma_nhoods_main/FeatureServer/0
+
+C1: Compilation and deterministic calculations
+Period: October 13, 2026; methods described below
+URL: Calculated or compiled as described in field definitions.
+
+
+SCHOOL_PROFILES.CSV COLUMN DICTIONARY
+
+
+school_name
+  School/program display name from SPS directory; Bridges added from P223.
+  Unit: text
+  Source: D1+P1
+  Period: Retrieved October 13, 2026; Grades 1-12: September 8, 2026; PS/K: September 11, 2026; created September 23
+
+
+school_key
+  Unique SPS directory URL slug; Bridges uses an explicit compilation key.
+  Unit: text
+  Source: C1
+  Period: October 13, 2026; methods described below
+
+
+roster_basis
+  SPS directory, or supplemental Bridges Transition P223/OSPI record.
+  Unit: text
+  Source: D1+P1
+  Period: Retrieved October 13, 2026; Grades 1-12: September 8, 2026; PS/K: September 11, 2026; created September 23
+
+
+ospi_school_organization_id
+  OSPI organization ID used for the OSPI joins. Interagency corrected by official entity name; Virtual withheld because directory links to CPPP.
+  Unit: text
+  Source: D1+T1
+  Period: Retrieved October 13, 2026; 2024-25; source dataasof December 16, 2025
+
+
+ospi_school_code
+  OSPI state school code from teacher dataset.
+  Unit: text
+  Source: T1
+  Period: 2024-25; source dataasof December 16, 2025
+
+
+principal_name
+  Current principal from profile, cross-checked with school About page; dated 2026-27 appointment notice takes precedence.
+  Unit: text
+  Source: D1+D2
+  Period: Retrieved October 13, 2026; Current website snapshot; appointments for 2026-27
+
+
+principal_role
+  Principal or Interim Principal, when stated.
+  Unit: text
+  Source: D1+D2
+  Period: Retrieved October 13, 2026; Current website snapshot; appointments for 2026-27
+
+
+principal_source_url
+  Exact page used for principal name; blank when unresolved.
+  Unit: text
+  Source: D1+D2
+  Period: Retrieved October 13, 2026; Current website snapshot; appointments for 2026-27
+
+
+principal_check_status
+  Cross-check result; source agreement is not independent HR confirmation.
+  Unit: text
+  Source: C1
+  Period: October 13, 2026; methods described below
+
+
+address
+  Directory street/mailing address; does not identify every site of multi-campus programs.
+  Unit: text
+  Source: D1
+  Period: Retrieved October 13, 2026
+
+
+city
+  City component parsed from directory address.
+  Unit: text
+  Source: D1
+  Period: Retrieved October 13, 2026
+
+
+state
+  State component parsed from directory address.
+  Unit: text
+  Source: D1
+  Period: Retrieved October 13, 2026
+
+
+postal_code
+  Five-digit postal code parsed from directory address; preserve as text.
+  Unit: text
+  Source: D1
+  Period: Retrieved October 13, 2026
+
+
+neighborhood
+  S_HOOD from polygon containing matching-address GIS point; unofficial City Clerk geographic convention, not attendance boundary.
+  Unit: text
+  Source: G1+G2
+  Period: Retrieved October 13, 2026; only points matching directory street address used; Retrieved October 13, 2026; City Clerk unofficial neighborhood delineation
+
+
+neighborhood_region
+  L_HOOD from main polygon containing matching-address GIS point.
+  Unit: text
+  Source: G1+G3
+  Period: Retrieved October 13, 2026; only points matching directory street address used; Retrieved October 13, 2026; City Clerk unofficial neighborhood delineation
+
+
+location_check_status
+  GIS match status; no coordinates or neighborhood guessed for unmatched addresses.
+  Unit: text
+  Source: C1
+  Period: October 13, 2026; methods described below
+
+
+school_board_districts
+  District(s) explicitly listed on school profile; semicolon separated.
+  Unit: text
+  Source: D1
+  Period: Retrieved October 13, 2026
+
+
+school_assignment_type
+  Attendance Area School, Option School, or Alternative Learning Experience, as explicitly stated in profile.
+  Unit: text
+  Source: D1
+  Period: Retrieved October 13, 2026
+
+
+website_url
+  School website linked from SPS directory.
+  Unit: text
+  Source: D1
+  Period: Retrieved October 13, 2026
+
+
+school_profile_url
+  Exact district profile page.
+  Unit: text
+  Source: D1
+  Period: Retrieved October 13, 2026
+
+
+snapshot_date
+  Date of extraction/checks, not date of all source measurements.
+  Unit: text
+  Source: C1
+  Period: October 13, 2026; methods described below
+
+
+latitude
+  Matching-address GIS point y coordinate in WGS84 EPSG:4326.
+  Unit: decimal degrees
+  Source: G1
+  Period: Retrieved October 13, 2026; only points matching directory street address used
+
+
+longitude
+  Matching-address GIS point x coordinate in WGS84 EPSG:4326.
+  Unit: decimal degrees
+  Source: G1
+  Period: Retrieved October 13, 2026; only points matching directory street address used
+
+
+teacher_count_2024_25
+  Distinct head count of all classroom teachers; teachertotal. Teachers shared across schools can be counted at multiple schools.
+  Unit: people
+  Source: T1
+  Period: 2024-25; source dataasof December 16, 2025
+
+
+teacher_count_check_status
+  Comparison with teacher_demographics All-category teachertotalcount. Virtual shared ID is intentionally not duplicated.
+  Unit: text
+  Source: C1
+  Period: October 13, 2026; methods described below
+
+
+ospi_student_teacher_ratio_2024_25
+  Reported studenttoteacherratio using same-year October 1 students; not current class size.
+  Unit: students per teacher
+  Source: T1
+  Period: 2024-25; source dataasof December 16, 2025
+
+
+ospi_ratio_student_count_2024_25
+  Reported studenttotal denominator basis for student-teacher ratio; October 1 head count.
+  Unit: students
+  Source: T1
+  Period: 2024-25; source dataasof December 16, 2025
+
+
+teacher_avg_years_experience_2024_25
+  All-category avgyearsexperience, as reported.
+  Unit: years
+  Source: T2
+  Period: 2024-25; source dataasof December 11, 2025
+
+
+teacher_masters_pct_2024_25
+  All-category ma_percent multiplied by 100. Rounded by source.
+  Unit: percent
+  Source: T2+C1
+  Period: 2024-25; source dataasof December 11, 2025; October 13, 2026; methods described below
+
+
+teacher_data_as_of
+  dataasof from teacher ratio dataset.
+  Unit: date
+  Source: T1
+  Period: 2024-25; source dataasof December 16, 2025
+
+
+ospi_enrollment_all_grades_2024_25
+  All Grades all_students from OSPI enrollment dataset, separate from newer P223 population.
+  Unit: students
+  Source: E1
+  Period: 2024-25; source dataasof June 2, 2025
+
+
+low_income_count_2024_25
+  All Grades low_income count; withheld if category is listed in source DAT disclosure avoidance note.
+  Unit: students
+  Source: E1
+  Period: 2024-25; source dataasof June 2, 2025
+
+
+section_504_count_2024_25
+  All Grades section_504 count; withheld if suppressed by source.
+  Unit: students
+  Source: E1
+  Period: 2024-25; source dataasof June 2, 2025
+
+
+highly_capable_count_2024_25
+  All Grades highly_capable count; withheld if suppressed by source.
+  Unit: students
+  Source: E1
+  Period: 2024-25; source dataasof June 2, 2025
+
+
+homeless_count_2024_25
+  All Grades homeless count; withheld if suppressed by source.
+  Unit: students
+  Source: E1
+  Period: 2024-25; source dataasof June 2, 2025
+
+
+ospi_enrollment_disclosure_note
+  Verbatim dat note from All Grades record; explains source suppression.
+  Unit: text
+  Source: E1
+  Period: 2024-25; source dataasof June 2, 2025
+
+
+ospi_enrollment_data_as_of
+  dataasof from All Grades enrollment record.
+  Unit: date
+  Source: E1
+  Period: 2024-25; source dataasof June 2, 2025
+
+
+student_asian_pct_2025_26
+  Asian percentage in School 2025/26 row; source rounded to whole percent. Hispanic includes any race. K-8 uses elementary table, not middle-only component.
+  Unit: percent
+  Source: R1
+  Period: School 2025/26 row, not Boundary 2025/26
+
+
+student_black_pct_2025_26
+  Black percentage in School 2025/26 row; source rounded to whole percent. Hispanic includes any race. K-8 uses elementary table, not middle-only component.
+  Unit: percent
+  Source: R1
+  Period: School 2025/26 row, not Boundary 2025/26
+
+
+student_hispanic_pct_2025_26
+  Hispanic percentage in School 2025/26 row; source rounded to whole percent. Hispanic includes any race. K-8 uses elementary table, not middle-only component.
+  Unit: percent
+  Source: R1
+  Period: School 2025/26 row, not Boundary 2025/26
+
+
+student_multiracial_pct_2025_26
+  Multi Racial percentage in School 2025/26 row; source rounded to whole percent. Hispanic includes any race. K-8 uses elementary table, not middle-only component.
+  Unit: percent
+  Source: R1
+  Period: School 2025/26 row, not Boundary 2025/26
+
+
+student_native_american_pct_2025_26
+  Native American percentage in School 2025/26 row; source rounded to whole percent. Hispanic includes any race. K-8 uses elementary table, not middle-only component.
+  Unit: percent
+  Source: R1
+  Period: School 2025/26 row, not Boundary 2025/26
+
+
+student_pacific_islander_pct_2025_26
+  Pacific Islander percentage in School 2025/26 row; source rounded to whole percent. Hispanic includes any race. K-8 uses elementary table, not middle-only component.
+  Unit: percent
+  Source: R1
+  Period: School 2025/26 row, not Boundary 2025/26
+
+
+student_white_pct_2025_26
+  White percentage in School 2025/26 row; source rounded to whole percent. Hispanic includes any race. K-8 uses elementary table, not middle-only component.
+  Unit: percent
+  Source: R1
+  Period: School 2025/26 row, not Boundary 2025/26
+
+
+demographics_pdf_page
+  Physical Section 10 PDF page for school race/ethnicity data.
+  Unit: page
+  Source: R1
+  Period: School 2025/26 row, not Boundary 2025/26
+
+
+demographics_status
+  Available or school not covered by latest SPS race/ethnicity section.
+  Unit: text
+  Source: C1
+  Period: October 13, 2026; methods described below
+
+
+budget_classroom_fte_2026_27
+  Classroom Teachers: Total Staff FTE column on school budget page. School-funded planned positions, not actual staffed people.
+  Unit: FTE
+  Source: B1
+  Period: Budgeted 2026-27 school-funded staffing; planned FTE, not actual head count
+
+
+budget_special_ed_fte_2026_27
+  Special Education Teachers: Total Staff FTE column on school budget page. School-funded planned positions, not actual staffed people.
+  Unit: FTE
+  Source: B1
+  Period: Budgeted 2026-27 school-funded staffing; planned FTE, not actual head count
+
+
+budget_bilingual_fte_2026_27
+  Bilingual Teachers: Total Staff FTE column on school budget page. School-funded planned positions, not actual staffed people.
+  Unit: FTE
+  Source: B1
+  Period: Budgeted 2026-27 school-funded staffing; planned FTE, not actual head count
+
+
+budget_preschool_fte_2026_27
+  Preschool Teachers: Total Staff FTE column on school budget page. School-funded planned positions, not actual staffed people.
+  Unit: FTE
+  Source: B1
+  Period: Budgeted 2026-27 school-funded staffing; planned FTE, not actual head count
+
+
+budget_specialist_intervention_fte_2026_27
+  Specialists & Interv Teachers: Total Staff FTE column on school budget page. School-funded planned positions, not actual staffed people.
+  Unit: FTE
+  Source: B1
+  Period: Budgeted 2026-27 school-funded staffing; planned FTE, not actual head count
+
+
+budget_instructional_assistants_fte_2026_27
+  Instructional Assistants: Total Staff FTE column on school budget page. School-funded planned positions, not actual staffed people.
+  Unit: FTE
+  Source: B1
+  Period: Budgeted 2026-27 school-funded staffing; planned FTE, not actual head count
+
+
+budget_counselors_social_workers_fte_2026_27
+  Counselors & Social Workers: Total Staff FTE column on school budget page. School-funded planned positions, not actual staffed people.
+  Unit: FTE
+  Source: B1
+  Period: Budgeted 2026-27 school-funded staffing; planned FTE, not actual head count
+
+
+budget_librarians_fte_2026_27
+  Librarians: Total Staff FTE column on school budget page. School-funded planned positions, not actual staffed people.
+  Unit: FTE
+  Source: B1
+  Period: Budgeted 2026-27 school-funded staffing; planned FTE, not actual head count
+
+
+budget_administrators_fte_2026_27
+  School Administrators: Total Staff FTE column on school budget page. School-funded planned positions, not actual staffed people.
+  Unit: FTE
+  Source: B1
+  Period: Budgeted 2026-27 school-funded staffing; planned FTE, not actual head count
+
+
+budget_all_school_funded_staff_fte_2026_27
+  Total Staff FTE: Total Staff FTE column on school budget page. School-funded planned positions, not actual staffed people.
+  Unit: FTE
+  Source: B1
+  Period: Budgeted 2026-27 school-funded staffing; planned FTE, not actual head count
+
+
+budget_teacher_fte_total_2026_27
+  Sum of five teacher categories: classroom, special ed, bilingual, preschool, specialists/intervention. Excludes librarians and administrators. Derived from published rounded rows.
+  Unit: FTE
+  Source: B1+C1
+  Period: Budgeted 2026-27 school-funded staffing; planned FTE, not actual head count; October 13, 2026; methods described below
+
+
+budget_school_total_usd_2026_27
+  Total School Budget for 26-27. Not total per-school spending including centrally funded expenses.
+  Unit: USD
+  Source: B1
+  Period: Budgeted 2026-27 school-funded staffing; planned FTE, not actual head count
+
+
+budget_pdf_page
+  Physical adopted-budget PDF page for school staffing/budget table.
+  Unit: page
+  Source: B1
+  Period: Budgeted 2026-27 school-funded staffing; planned FTE, not actual head count
+
+
+facility_inventory_name
+  Verbatim 2025 inventory facility name. Multi-site program areas withheld.
+  Unit: text
+  Source: F1
+  Period: 2025 facility inventory; historical, not a 2026 survey
+
+
+building_gross_sqft_2025
+  Gross sq ft from 2025 inventory. Historical area only; withheld when inventory address conflicts with directory.
+  Unit: square feet
+  Source: F1
+  Period: 2025 facility inventory; historical, not a 2026 survey
+
+
+building_scap_sqft_2025
+  SCAP Recognized sq ft from 2025 inventory, distinct from gross area.
+  Unit: square feet
+  Source: F1
+  Period: 2025 facility inventory; historical, not a 2026 survey
+
+
+site_acres_2025
+  Site Area (Acre) from 2025 inventory. Shared campuses may duplicate land area; do not sum as unique district land.
+  Unit: acres
+  Source: F1
+  Period: 2025 facility inventory; historical, not a 2026 survey
+
+
+facilities_pdf_page
+  Physical PDF page in 2025 plan, Appendix A.
+  Unit: page
+  Source: F1
+  Period: 2025 facility inventory; historical, not a 2026 survey
+
+
+facility_check_status
+  Historical inventory match; TBD/missing or address conflict/multi-site record explicitly flagged.
+  Unit: text
+  Source: F1
+  Period: 2025 facility inventory; historical, not a 2026 survey
+
+
+data_notes
+  School-specific join conflicts, missing sources and deliberate exclusions.
+  Unit: text
+  Source: C1
+  Period: October 13, 2026; methods described below
+
+
+P223_ENROLLMENT.CSV COLUMN DICTIONARY
+
+
+school_key
+  Unique SPS directory URL slug; Bridges uses an explicit compilation key.
+  Unit: text
+  Source: C1
+  Period: October 13, 2026; methods described below
+
+
+school_name
+  School/program display name from SPS directory; Bridges added from P223.
+  Unit: text
+  Source: D1+P1
+  Period: Retrieved October 13, 2026; Grades 1-12: September 8, 2026; PS/K: September 11, 2026; created September 23
+
+
+p223_reporting_month
+  Report month in YYYY-MM; update when replacing the snapshot.
+  Unit: text
+  Source: P1
+  Period: Monthly P223 snapshot metadata.
+
+
+p223_school_year
+  School year covered by the P223 report, for example 2026-27.
+  Unit: text
+  Source: P1
+  Period: Monthly P223 snapshot metadata.
+
+
+p223_report_created_date
+  Date printed in the source report (ISO YYYY-MM-DD).
+  Unit: text
+  Source: P1
+  Period: Monthly P223 snapshot metadata.
+
+
+p223_source_url
+  Official P223 PDF URL; update with each reporting month.
+  Unit: text
+  Source: P1
+  Period: Monthly P223 snapshot metadata.
+
+
+p223_retrieved_date
+  Date the report was retrieved (ISO YYYY-MM-DD).
+  Unit: text
+  Source: P1
+  Period: Monthly P223 snapshot metadata.
+
+
+p223_notes
+  Notes specific to this monthly enrollment snapshot.
+  Unit: text
+  Source: C1
+  Period: Monthly P223 snapshot metadata.
+
+
+p223_reporting_school_name
+  Verbatim P223 reporting unit matched to this school.
+  Unit: text
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: p223_reporting_school_name
+
+
+p223_pdf_page
+  Physical PDF page, counting cover and contents, for exact school table.
+  Unit: text
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: p223_pdf_page
+
+
+p223_report_page
+  Printed Page number within P223 report.
+  Unit: text
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: p223_report_page
+
+
+p223_coverage_status
+  Matched or not separately reported. Missing report is not zero enrollment.
+  Unit: text
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: p223_coverage_status
+
+
+p223_count_date_grades_1_12
+  Report header count date for grades 1-12.
+  Unit: text
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: p223_count_date_grades_1_12
+
+
+p223_count_date_preschool_k
+  Report header count date for preschool and kindergarten.
+  Unit: text
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: p223_count_date_preschool_k
+
+
+enrollment_total
+  Total Student Count, including PS and full-time Running Start at high schools. P223 Total row.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: enrollment_total_sep2026
+
+
+enrollment_regular
+  Regular Program as reported. Not an additive complement to bilingual/special ed. P223 Total row.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: enrollment_regular_sep2026
+
+
+enrollment_bilingual
+  Bilingual Served; overlaps Special Ed Served when both apply. P223 Total row.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: enrollment_bilingual_sep2026
+
+
+enrollment_special_ed
+  Spec. Ed. Served, including preschool; overlaps bilingual when both apply. P223 Total row.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: enrollment_special_ed_sep2026
+
+
+enrollment_male
+  Male student count, as reported. P223 Total row.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: enrollment_male_sep2026
+
+
+enrollment_female
+  Female student count, as reported. P223 Total row.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: enrollment_female_sep2026
+
+
+enrollment_nonbinary
+  Non-Binary student count, as reported. P223 Total row.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: enrollment_nonbinary_sep2026
+
+
+enrollment_p223_count
+  P223 Total Count eligible for basic education funding; excludes preschool and some high-school students. P223 Total row.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: enrollment_p223_count_sep2026
+
+
+enrollment_p223_fte
+  P223 Total FTE eligible for basic education funding; not head count. P223 Total row.
+  Unit: FTE
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: enrollment_p223_fte_sep2026
+
+
+enrollment_k12
+  Sum of Total Student Count for K and grades 1-12; excludes preschool.
+  Unit: students
+  Source: P1+C1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: enrollment_k12_sep2026
+
+
+grades_with_students
+  Semicolon-separated grades with positive Total Student Count; not an official statement of authorized grade offerings.
+  Unit: text
+  Source: P1+C1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grades_with_students_sep2026
+
+
+grade_ps_total
+  Grade Preschool: Total Student Count; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_ps_total_sep2026
+
+
+grade_ps_regular
+  Grade Preschool: Regular Program; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_ps_regular_sep2026
+
+
+grade_ps_bilingual
+  Grade Preschool: Bilingual Served; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_ps_bilingual_sep2026
+
+
+grade_ps_special_ed
+  Grade Preschool: Spec. Ed. Served; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_ps_special_ed_sep2026
+
+
+grade_ps_p223_count
+  Grade Preschool: P223 Total Count; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_ps_p223_count_sep2026
+
+
+grade_ps_p223_fte
+  Grade Preschool: P223 Total FTE; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: FTE
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_ps_p223_fte_sep2026
+
+
+grade_k_total
+  Grade K: Total Student Count; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_k_total_sep2026
+
+
+grade_k_regular
+  Grade K: Regular Program; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_k_regular_sep2026
+
+
+grade_k_bilingual
+  Grade K: Bilingual Served; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_k_bilingual_sep2026
+
+
+grade_k_special_ed
+  Grade K: Spec. Ed. Served; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_k_special_ed_sep2026
+
+
+grade_k_p223_count
+  Grade K: P223 Total Count; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_k_p223_count_sep2026
+
+
+grade_k_p223_fte
+  Grade K: P223 Total FTE; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: FTE
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_k_p223_fte_sep2026
+
+
+grade_1_total
+  Grade 1: Total Student Count; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_1_total_sep2026
+
+
+grade_1_regular
+  Grade 1: Regular Program; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_1_regular_sep2026
+
+
+grade_1_bilingual
+  Grade 1: Bilingual Served; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_1_bilingual_sep2026
+
+
+grade_1_special_ed
+  Grade 1: Spec. Ed. Served; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_1_special_ed_sep2026
+
+
+grade_1_p223_count
+  Grade 1: P223 Total Count; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_1_p223_count_sep2026
+
+
+grade_1_p223_fte
+  Grade 1: P223 Total FTE; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: FTE
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_1_p223_fte_sep2026
+
+
+grade_2_total
+  Grade 2: Total Student Count; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_2_total_sep2026
+
+
+grade_2_regular
+  Grade 2: Regular Program; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_2_regular_sep2026
+
+
+grade_2_bilingual
+  Grade 2: Bilingual Served; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_2_bilingual_sep2026
+
+
+grade_2_special_ed
+  Grade 2: Spec. Ed. Served; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_2_special_ed_sep2026
+
+
+grade_2_p223_count
+  Grade 2: P223 Total Count; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_2_p223_count_sep2026
+
+
+grade_2_p223_fte
+  Grade 2: P223 Total FTE; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: FTE
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_2_p223_fte_sep2026
+
+
+grade_3_total
+  Grade 3: Total Student Count; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_3_total_sep2026
+
+
+grade_3_regular
+  Grade 3: Regular Program; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_3_regular_sep2026
+
+
+grade_3_bilingual
+  Grade 3: Bilingual Served; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_3_bilingual_sep2026
+
+
+grade_3_special_ed
+  Grade 3: Spec. Ed. Served; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_3_special_ed_sep2026
+
+
+grade_3_p223_count
+  Grade 3: P223 Total Count; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_3_p223_count_sep2026
+
+
+grade_3_p223_fte
+  Grade 3: P223 Total FTE; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: FTE
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_3_p223_fte_sep2026
+
+
+grade_4_total
+  Grade 4: Total Student Count; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_4_total_sep2026
+
+
+grade_4_regular
+  Grade 4: Regular Program; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_4_regular_sep2026
+
+
+grade_4_bilingual
+  Grade 4: Bilingual Served; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_4_bilingual_sep2026
+
+
+grade_4_special_ed
+  Grade 4: Spec. Ed. Served; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_4_special_ed_sep2026
+
+
+grade_4_p223_count
+  Grade 4: P223 Total Count; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_4_p223_count_sep2026
+
+
+grade_4_p223_fte
+  Grade 4: P223 Total FTE; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: FTE
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_4_p223_fte_sep2026
+
+
+grade_5_total
+  Grade 5: Total Student Count; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_5_total_sep2026
+
+
+grade_5_regular
+  Grade 5: Regular Program; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_5_regular_sep2026
+
+
+grade_5_bilingual
+  Grade 5: Bilingual Served; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_5_bilingual_sep2026
+
+
+grade_5_special_ed
+  Grade 5: Spec. Ed. Served; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_5_special_ed_sep2026
+
+
+grade_5_p223_count
+  Grade 5: P223 Total Count; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_5_p223_count_sep2026
+
+
+grade_5_p223_fte
+  Grade 5: P223 Total FTE; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: FTE
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_5_p223_fte_sep2026
+
+
+grade_6_total
+  Grade 6: Total Student Count; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_6_total_sep2026
+
+
+grade_6_regular
+  Grade 6: Regular Program; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_6_regular_sep2026
+
+
+grade_6_bilingual
+  Grade 6: Bilingual Served; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_6_bilingual_sep2026
+
+
+grade_6_special_ed
+  Grade 6: Spec. Ed. Served; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_6_special_ed_sep2026
+
+
+grade_6_p223_count
+  Grade 6: P223 Total Count; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_6_p223_count_sep2026
+
+
+grade_6_p223_fte
+  Grade 6: P223 Total FTE; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: FTE
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_6_p223_fte_sep2026
+
+
+grade_7_total
+  Grade 7: Total Student Count; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_7_total_sep2026
+
+
+grade_7_regular
+  Grade 7: Regular Program; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_7_regular_sep2026
+
+
+grade_7_bilingual
+  Grade 7: Bilingual Served; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_7_bilingual_sep2026
+
+
+grade_7_special_ed
+  Grade 7: Spec. Ed. Served; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_7_special_ed_sep2026
+
+
+grade_7_p223_count
+  Grade 7: P223 Total Count; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_7_p223_count_sep2026
+
+
+grade_7_p223_fte
+  Grade 7: P223 Total FTE; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: FTE
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_7_p223_fte_sep2026
+
+
+grade_8_total
+  Grade 8: Total Student Count; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_8_total_sep2026
+
+
+grade_8_regular
+  Grade 8: Regular Program; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_8_regular_sep2026
+
+
+grade_8_bilingual
+  Grade 8: Bilingual Served; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_8_bilingual_sep2026
+
+
+grade_8_special_ed
+  Grade 8: Spec. Ed. Served; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_8_special_ed_sep2026
+
+
+grade_8_p223_count
+  Grade 8: P223 Total Count; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_8_p223_count_sep2026
+
+
+grade_8_p223_fte
+  Grade 8: P223 Total FTE; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: FTE
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_8_p223_fte_sep2026
+
+
+grade_9_total
+  Grade 9: Total Student Count; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_9_total_sep2026
+
+
+grade_9_regular
+  Grade 9: Regular Program; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_9_regular_sep2026
+
+
+grade_9_bilingual
+  Grade 9: Bilingual Served; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_9_bilingual_sep2026
+
+
+grade_9_special_ed
+  Grade 9: Spec. Ed. Served; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_9_special_ed_sep2026
+
+
+grade_9_p223_count
+  Grade 9: P223 Total Count; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_9_p223_count_sep2026
+
+
+grade_9_p223_fte
+  Grade 9: P223 Total FTE; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: FTE
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_9_p223_fte_sep2026
+
+
+grade_10_total
+  Grade 10: Total Student Count; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_10_total_sep2026
+
+
+grade_10_regular
+  Grade 10: Regular Program; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_10_regular_sep2026
+
+
+grade_10_bilingual
+  Grade 10: Bilingual Served; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_10_bilingual_sep2026
+
+
+grade_10_special_ed
+  Grade 10: Spec. Ed. Served; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_10_special_ed_sep2026
+
+
+grade_10_p223_count
+  Grade 10: P223 Total Count; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_10_p223_count_sep2026
+
+
+grade_10_p223_fte
+  Grade 10: P223 Total FTE; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: FTE
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_10_p223_fte_sep2026
+
+
+grade_11_total
+  Grade 11: Total Student Count; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_11_total_sep2026
+
+
+grade_11_regular
+  Grade 11: Regular Program; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_11_regular_sep2026
+
+
+grade_11_bilingual
+  Grade 11: Bilingual Served; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_11_bilingual_sep2026
+
+
+grade_11_special_ed
+  Grade 11: Spec. Ed. Served; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_11_special_ed_sep2026
+
+
+grade_11_p223_count
+  Grade 11: P223 Total Count; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_11_p223_count_sep2026
+
+
+grade_11_p223_fte
+  Grade 11: P223 Total FTE; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: FTE
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_11_p223_fte_sep2026
+
+
+grade_12_total
+  Grade 12: Total Student Count; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_12_total_sep2026
+
+
+grade_12_regular
+  Grade 12: Regular Program; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_12_regular_sep2026
+
+
+grade_12_bilingual
+  Grade 12: Bilingual Served; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_12_bilingual_sep2026
+
+
+grade_12_special_ed
+  Grade 12: Spec. Ed. Served; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_12_special_ed_sep2026
+
+
+grade_12_p223_count
+  Grade 12: P223 Total Count; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: students
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_12_p223_count_sep2026
+
+
+grade_12_p223_fte
+  Grade 12: P223 Total FTE; same definitions as school totals. Blank grade rows in an available report are encoded as 0.
+  Unit: FTE
+  Source: P1
+  Period: Monthly P223; see p223_reporting_month and count-date fields.
+  Original combined-CSV header: grade_12_p223_fte_sep2026
