@@ -19,7 +19,7 @@ This repository serves a static, single-school dashboard on GitHub Pages. Mainta
 | `p223_enrollment.csv` | Historical monthly enrollment and all grade/program measures | Unique `school_key` + `p223_reporting_month` |
 | `assessment_results.csv` | General SBA/SBAC achievement and participation by grade/subject | School, year, grade, assessment, subject and student group |
 | `map_results.csv` | Verified school-published MAP achievement details | School, year, period, grade, subject, metric and student group |
-| `maps/*.webp` | Previews rendered from official SPS map PDFs | `all.webp` and director maps `1.webp`–`7.webp` |
+| `maps/*.webp` | Previews rendered from official SPS map PDFs | `all.webp`, `attendance-esms.webp`, `attendance-hs.webp`, and director maps `1.webp`–`7.webp` |
 | `source_provenance.json` | Column definitions, per-school evidence, source registry, finance snapshots and district reconciliation controls | Varies by section; school records use `school_key` |
 | `DATA_GUIDE.txt` | Reader-facing methods, limitations and publishing instructions | Document |
 | `seattle_public_schools_sources_and_validation.pdf` | Reader-facing column-by-column sources | Document |
@@ -123,7 +123,7 @@ Verify current directors against official SPS pages and record the check date. C
 
 OpenStreetMap embeds use verified latitude/longitude with a medium neighborhood zoom. No coordinates means no guessed pin. It is a street map, not photographic street view.
 
-Official SPS map previews are static renders of PDFs. If replacing a PDF, regenerate its WebP and all affected label boxes together. In `CONFIG.mapAssets`, boxes are normalized `[left, top, right, bottom]` fractions of the entire source page. Highlights surround printed names, not geocoded campus boundaries. Check wrapped labels and duplicate labels visually. Preserve the printed map date, source URL and site-move caveats. The all-schools map and director maps serve different purposes; do not imply the all-schools map has board boundaries.
+Official SPS map previews are static renders of PDFs. If replacing a PDF, regenerate its WebP and all affected label boxes together. In `CONFIG.mapAssets`, boxes are normalized `[left, top, right, bottom]` fractions of the entire source page. Highlights surround printed names, not geocoded campus boundaries or attendance-area polygons. Check wrapped labels and duplicate labels visually. Preserve the printed map date, source URL and site-move caveats. The location panel defaults to the elementary/middle attendance map or the high school attendance map. The all-schools map is the alternate location view and has no attendance-area or board-boundary overlay. Director-district map files remain available in the repository; do not imply the all-schools map has board boundaries.
 
 ## Dashboard implementation and schema changes
 
