@@ -32348,7 +32348,7 @@
       "definition": "OSPI organization ID used for the OSPI joins. Interagency corrected by official entity name; Virtual withheld because directory links to CPPP.",
       "source": "D1+T1",
       "unit": "text",
-      "period": "Retrieved October 13, 2026; 2024-25; source dataasof December 16, 2025",
+      "period": "Retrieved October 13, 2026; 2024-25; source data as of December 16, 2025",
       "file": "school_profiles.csv"
     },
     {
@@ -32356,7 +32356,7 @@
       "definition": "OSPI state school code from teacher dataset.",
       "source": "T1",
       "unit": "text",
-      "period": "2024-25; source dataasof December 16, 2025",
+      "period": "2024-25; source data as of December 16, 2025",
       "file": "school_profiles.csv"
     },
     {
@@ -33441,7 +33441,7 @@
       "definition": "Distinct head count of all classroom teachers; teachertotal. Teachers shared across schools can be counted at multiple schools.",
       "source": "T1",
       "unit": "people",
-      "period": "2024-25; source dataasof December 16, 2025",
+      "period": "2024-25; source data as of December 16, 2025",
       "file": "school_profiles.csv"
     },
     {
@@ -33457,7 +33457,7 @@
       "definition": "Reported studenttoteacherratio using same-year October 1 students; not current class size.",
       "source": "T1",
       "unit": "students per teacher",
-      "period": "2024-25; source dataasof December 16, 2025",
+      "period": "2024-25; source data as of December 16, 2025",
       "file": "school_profiles.csv"
     },
     {
@@ -33465,7 +33465,7 @@
       "definition": "Reported studenttotal denominator basis for student-teacher ratio; October 1 head count.",
       "source": "T1",
       "unit": "students",
-      "period": "2024-25; source dataasof December 16, 2025",
+      "period": "2024-25; source data as of December 16, 2025",
       "file": "school_profiles.csv"
     },
     {
@@ -33473,7 +33473,7 @@
       "definition": "All-category avgyearsexperience, as reported.",
       "source": "T2",
       "unit": "years",
-      "period": "2024-25; source dataasof December 11, 2025",
+      "period": "2024-25; source data as of December 11, 2025",
       "file": "school_profiles.csv"
     },
     {
@@ -33481,7 +33481,7 @@
       "definition": "All-category ma_percent multiplied by 100. Rounded by source.",
       "source": "T2+C1",
       "unit": "percent",
-      "period": "2024-25; source dataasof December 11, 2025; October 13, 2026; methods described below",
+      "period": "2024-25; source data as of December 11, 2025; October 13, 2026; methods described below",
       "file": "school_profiles.csv"
     },
     {
@@ -33489,7 +33489,7 @@
       "definition": "dataasof from teacher ratio dataset.",
       "source": "T1",
       "unit": "date",
-      "period": "2024-25; source dataasof December 16, 2025",
+      "period": "2024-25; source data as of December 16, 2025",
       "file": "school_profiles.csv"
     },
     {
@@ -33497,7 +33497,7 @@
       "definition": "All Grades all_students from OSPI enrollment dataset, separate from newer P223 population.",
       "source": "E1",
       "unit": "students",
-      "period": "2024-25; source dataasof June 2, 2025",
+      "period": "2024-25; source data as of June 2, 2025",
       "file": "school_profiles.csv"
     },
     {
@@ -33505,7 +33505,7 @@
       "definition": "All Grades low_income count; withheld if category is listed in source DAT disclosure avoidance note.",
       "source": "E1",
       "unit": "students",
-      "period": "2024-25; source dataasof June 2, 2025",
+      "period": "2024-25; source data as of June 2, 2025",
       "file": "school_profiles.csv"
     },
     {
@@ -33513,7 +33513,7 @@
       "definition": "All Grades section_504 count; withheld if suppressed by source.",
       "source": "E1",
       "unit": "students",
-      "period": "2024-25; source dataasof June 2, 2025",
+      "period": "2024-25; source data as of June 2, 2025",
       "file": "school_profiles.csv"
     },
     {
@@ -33521,7 +33521,7 @@
       "definition": "All Grades highly_capable count; withheld if suppressed by source.",
       "source": "E1",
       "unit": "students",
-      "period": "2024-25; source dataasof June 2, 2025",
+      "period": "2024-25; source data as of June 2, 2025",
       "file": "school_profiles.csv"
     },
     {
@@ -33529,7 +33529,7 @@
       "definition": "All Grades homeless count; withheld if suppressed by source.",
       "source": "E1",
       "unit": "students",
-      "period": "2024-25; source dataasof June 2, 2025",
+      "period": "2024-25; source data as of June 2, 2025",
       "file": "school_profiles.csv"
     },
     {
@@ -33537,7 +33537,7 @@
       "definition": "Verbatim dat note from All Grades record; explains source suppression.",
       "source": "E1",
       "unit": "text",
-      "period": "2024-25; source dataasof June 2, 2025",
+      "period": "2024-25; source data as of June 2, 2025",
       "file": "school_profiles.csv"
     },
     {
@@ -33545,7 +33545,7 @@
       "definition": "dataasof from All Grades enrollment record.",
       "source": "E1",
       "unit": "date",
-      "period": "2024-25; source dataasof June 2, 2025",
+      "period": "2024-25; source data as of June 2, 2025",
       "file": "school_profiles.csv"
     },
     {
@@ -35087,17 +35087,17 @@
     "T1": {
       "title": "OSPI Report Card Student Teacher Ratio, 2017-18 to 2024-25",
       "url": "https://data.wa.gov/Education/Report-Card-Student-Teacher-Ratio-School-Years-2017-1/gks4-v7ka",
-      "period": "2024-25; source dataasof December 16, 2025"
+      "period": "2024-25; source data as of December 16, 2025"
     },
     "T2": {
       "title": "OSPI Report Card Teacher Demographics, 2017-18 to 2024-25",
       "url": "https://data.wa.gov/Education/Report-Card-Teacher-Demographics-School-Years-2017-18/yp28-ks6d",
-      "period": "2024-25; source dataasof December 11, 2025"
+      "period": "2024-25; source data as of December 11, 2025"
     },
     "E1": {
       "title": "OSPI Report Card Enrollment 2024-25",
       "url": "https://data.wa.gov/education/Report-Card-Enrollment-2024-25-School-Year/2rwv-gs2e",
-      "period": "2024-25; source dataasof June 2, 2025"
+      "period": "2024-25; source data as of June 2, 2025"
     },
     "R1": {
       "title": "SPS 2025-26 Annual Enrollment Report, Section 10: Student Demographics",
