@@ -32392,6 +32392,30 @@
       "file": "school_profiles.csv"
     },
     {
+      "column": "executive_director_name",
+      "definition": "Executive director of schools who supports this school, from the district leadership page.",
+      "source": "D3",
+      "unit": "text",
+      "period": "Retrieved October 16, 2026",
+      "file": "school_profiles.csv"
+    },
+    {
+      "column": "executive_director_role",
+      "definition": "Published executive-director title. Grade-band assignments, not a change to the school’s attendance area.",
+      "source": "D3",
+      "unit": "text",
+      "period": "Retrieved October 16, 2026",
+      "file": "school_profiles.csv"
+    },
+    {
+      "column": "executive_director_source_url",
+      "definition": "SPS Executive Directors of Schools page used for the name, title, and school list.",
+      "source": "D3",
+      "unit": "text",
+      "period": "Retrieved October 16, 2026",
+      "file": "school_profiles.csv"
+    },
+    {
       "column": "address",
       "definition": "Directory street/mailing address; does not identify every site of multi-campus programs.",
       "source": "D1",
@@ -35045,6 +35069,16 @@
       "url": "https://www.seattleschools.org/news/school-leader-appointments/",
       "period": "Current website snapshot; appointments for 2026-27"
     },
+    "D3": {
+      "title": "SPS Executive Directors of Schools",
+      "url": "https://www.seattleschools.org/departments/executive-directors-of-schools/",
+      "period": "Retrieved October 16, 2026; school lists as published"
+    },
+    "A1": {
+      "title": "SPS 2025-26 Annual Enrollment Report, Table 4 attendance-area flows",
+      "url": "https://www.seattleschools.org/wp-content/uploads/2026/09/Annual-Enrollment-Report_2025.pdf",
+      "period": "October 1, 2025 headcount; Table 4-A grades K–5, Table 4-C grades 6–8, Table 4-E grades 9–12"
+    },
     "P1": {
       "title": "SPS monthly P223 Enrollment Data by School and Grade",
       "url": "https://www.seattleschools.org/departments/dots/data-reporting/enrollment-reporting-p223/",
@@ -35115,5 +35149,13 @@
       "url": "https://www.seattleschools.org/departments/capital-projects-and-planning/school-construction/",
       "period": "Retrieved 2026-10-13; individual dates recorded in per-field provenance"
     }
+  }
+,
+  "attendance_flows": {
+    "source_url": "https://www.seattleschools.org/wp-content/uploads/2026/09/Annual-Enrollment-Report_2025.pdf",
+    "retrieved": "2026-10-16",
+    "reporting_date": "2025-10-01",
+    "file": "attendance_flows.json",
+    "note": "Table 4 flows were extracted from the annual report text. Each side was kept only when its published grand total matched the sum of the rows. Option schools have residence flows only. Eight alternative or service programs have no subject table. School 2025/26 race percentages in Section 10 were compared with the existing profile percentages for 72 schools and matched, so those profile values were not replaced. October 1, 2025 enrollment is older than the September 2026 P223 snapshot, so monthly enrollment was not replaced."
   }
 }

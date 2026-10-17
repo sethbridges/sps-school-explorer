@@ -19,6 +19,7 @@ This repository serves a static, single-school dashboard on GitHub Pages. Mainta
 | `p223_enrollment.csv` | Historical monthly enrollment and all grade/program measures | Unique `school_key` + `p223_reporting_month` |
 | `assessment_results.csv` | General SBA/SBAC achievement and participation by grade/subject | School, year, grade, assessment, subject and student group |
 | `map_results.csv` | Verified school-published MAP achievement details | School, year, period, grade, subject, metric and student group |
+| `attendance_flows.json` | October 1, 2025 attendance-area flows from the 2025–26 Annual Enrollment Report, Table 4 | School, grade band, direction and destination or residence |
 | `maps/*.webp` | Previews rendered from official SPS map PDFs | `all.webp`, `attendance-esms.webp`, `attendance-hs.webp`, and director maps `1.webp`–`7.webp` |
 | `source_provenance.json` | Column definitions, per-school evidence, source registry, finance snapshots and district reconciliation controls | Varies by section; school records use `school_key` |
 | `DATA_GUIDE.txt` | Reader-facing methods, limitations and publishing instructions | Document |
