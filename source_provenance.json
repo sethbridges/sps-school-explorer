@@ -30586,6 +30586,18 @@
     }
   },
   "board_spending": {
+    "citywide_director_map": {
+      "title": "SPS Director Districts - 2026/27",
+      "document": "School Board/Redistricting/SPS Director Districts Map.pdf",
+      "source_url": "https://seattleschools.sharepoint.com/:b:/s/SPSBoardOffice-O365/IQAevz1wWvytTLEC3sOFM4J_AbSd0hQLnX7BwUGIHc_vBWY?e=iKylvN",
+      "library_url": "https://seattleschools.sharepoint.com/sites/SPSBoardOffice-O365/Shared%20Documents/Forms/AllItems.aspx?id=%2Fsites%2FSPSBoardOffice%2DO365%2FShared%20Documents%2FSchool%20Board%2FRedistricting%2FSPS%20Director%20Districts%20Map%2Epdf&parent=%2Fsites%2FSPSBoardOffice%2DO365%2FShared%20Documents%2FSchool%20Board%2FRedistricting&p=true&ga=1",
+      "listed_on": "https://www.seattleschools.org/about/school-board/meet-the-board/",
+      "pdf_modified": "2026-08-18",
+      "printed_mapfile": "SPS_District_2024",
+      "retrieved": "2026-10-17",
+      "preview": "maps/directors.webp",
+      "note": "Meet the Board links this SharePoint PDF. The sharing link is the public opener for the same file as the Board Office library URL. PDF metadata title is SPS Director Districts - 2026/27, modified 2026-08-18. The printed disclaimer names MapFile SPS_District_2024. Per-district map_url values remain the separate zoomed district PDFs."
+    },
     "records": {
       "adamses": {
         "school_key": "adamses",
