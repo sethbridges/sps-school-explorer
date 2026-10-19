@@ -2,7 +2,7 @@ SEATTLE PUBLIC SCHOOLS EXPLORER — DATA GUIDE
 Compiled October 13, 2026
 
 PUBLISH TO GITHUB PAGES
-Extract the ZIP. Upload index.html, all four CSV files, attendance_flows.json, and the entire maps folder to the same repository folder. The documentation files can be uploaded too. In repository Settings > Pages, select Deploy from a branch, your branch, and the folder containing index.html. Open the resulting Pages URL. Opening index.html from disk does not permit CSV fetches. Map previews need the maps folder; the OpenStreetMap iframe needs internet access.
+Extract the ZIP. Upload index.html, favicon.ico, apple-touch-icon.png, icon-192.png, icon-512.png, manifest.webmanifest, all four CSV files, attendance_flows.json, and the entire maps folder to the same repository folder. The documentation files can be uploaded too. In repository Settings > Pages, select Deploy from a branch, your branch, and the folder containing index.html. Open the resulting Pages URL. Opening index.html from disk does not permit CSV fetches. Map previews need the maps folder; the OpenStreetMap iframe needs internet access.
 
 DATA FILES
 school_profiles.csv: 106 unique school_key rows. Slower-changing directory data and explicitly dated annual/program/facility/finance/assessment snapshots. This is not a claim that every statistic is current in 2026.
