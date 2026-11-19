@@ -28986,6 +28986,164 @@
           "p223_fte": 0.0
         }
       ]
+    },
+    {
+      "month": "2026-10",
+      "school_year": "2026-27",
+      "matched": 104,
+      "reporting_units": 109,
+      "district_totals": {
+        "regular": 36357,
+        "bilingual": 7176,
+        "special_ed": 8240,
+        "male": 25734,
+        "female": 24108,
+        "nonbinary": 543,
+        "total": 50385,
+        "p223_count": 48470,
+        "p223_fte": 47678.68
+      },
+      "other_units": [
+        {
+          "name": "Exp Ed Unit",
+          "regular": 0,
+          "bilingual": 0,
+          "special_ed": 46,
+          "male": 37,
+          "female": 9,
+          "nonbinary": 0,
+          "total": 46,
+          "p223_count": 16,
+          "p223_fte": 16.0
+        },
+        {
+          "name": "Non-Public Agencies",
+          "regular": 1,
+          "bilingual": 0,
+          "special_ed": 6,
+          "male": 5,
+          "female": 2,
+          "nonbinary": 0,
+          "total": 7,
+          "p223_count": 0,
+          "p223_fte": 0.0
+        },
+        {
+          "name": "Interagency Open Doors Program",
+          "regular": 22,
+          "bilingual": 5,
+          "special_ed": 11,
+          "male": 14,
+          "female": 21,
+          "nonbinary": 3,
+          "total": 38,
+          "p223_count": 0,
+          "p223_fte": 0.0
+        },
+        {
+          "name": "LCS Open Doors Program",
+          "regular": 59,
+          "bilingual": 13,
+          "special_ed": 7,
+          "male": 40,
+          "female": 31,
+          "nonbinary": 7,
+          "total": 78,
+          "p223_count": 0,
+          "p223_fte": 0.0
+        },
+        {
+          "name": "Special Ed Private Svcs",
+          "regular": 0,
+          "bilingual": 0,
+          "special_ed": 82,
+          "male": 58,
+          "female": 24,
+          "nonbinary": 0,
+          "total": 82,
+          "p223_count": 0,
+          "p223_fte": 0.0
+        }
+      ]
+    },
+    {
+      "month": "2026-11",
+      "school_year": "2026-27",
+      "matched": 104,
+      "reporting_units": 109,
+      "district_totals": {
+        "regular": 36434,
+        "bilingual": 7276,
+        "special_ed": 8201,
+        "male": 25798,
+        "female": 24169,
+        "nonbinary": 549,
+        "total": 50516,
+        "p223_count": 48525,
+        "p223_fte": 47733.16
+      },
+      "other_units": [
+        {
+          "name": "Exp Ed Unit",
+          "regular": 1,
+          "bilingual": 0,
+          "special_ed": 46,
+          "male": 38,
+          "female": 9,
+          "nonbinary": 0,
+          "total": 47,
+          "p223_count": 16,
+          "p223_fte": 16.0
+        },
+        {
+          "name": "Non-Public Agencies",
+          "regular": 2,
+          "bilingual": 0,
+          "special_ed": 6,
+          "male": 5,
+          "female": 3,
+          "nonbinary": 0,
+          "total": 8,
+          "p223_count": 0,
+          "p223_fte": 0.0
+        },
+        {
+          "name": "Interagency Open Doors Program",
+          "regular": 20,
+          "bilingual": 5,
+          "special_ed": 11,
+          "male": 16,
+          "female": 17,
+          "nonbinary": 3,
+          "total": 36,
+          "p223_count": 0,
+          "p223_fte": 0.0
+        },
+        {
+          "name": "LCS Open Doors Program",
+          "regular": 69,
+          "bilingual": 14,
+          "special_ed": 6,
+          "male": 46,
+          "female": 35,
+          "nonbinary": 7,
+          "total": 88,
+          "p223_count": 0,
+          "p223_fte": 0.0
+        },
+        {
+          "name": "Special Ed Private Svcs",
+          "regular": 0,
+          "bilingual": 0,
+          "special_ed": 91,
+          "male": 62,
+          "female": 29,
+          "nonbinary": 0,
+          "total": 91,
+          "p223_count": 0,
+          "p223_fte": 0.0
+        }
+      ]
     }
   ],
   "assessments": {
